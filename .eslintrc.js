@@ -14,6 +14,7 @@ const config = createConfig('eslint', {
     'react/no-unknown-property': 'off',
     'react/no-unstable-nested-components': 'off',
     'react/jsx-no-constructed-context-values': 'off',
+    'func-names': 'off',
   },
 });
 
