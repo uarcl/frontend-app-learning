@@ -38,6 +38,7 @@ const SidebarBase = ({
     <section
       className={classNames('ml-0 ml-lg-4 border border-light-400 rounded-sm h-auto align-top', {
         'bg-white m-0 border-0 fixed-top vh-100 rounded-0': shouldDisplayFullScreen,
+        'min-vh-100': !shouldDisplayFullScreen,
       }, className)}
       style={{ width: shouldDisplayFullScreen ? '100%' : width }}
       aria-label={ariaLabel}

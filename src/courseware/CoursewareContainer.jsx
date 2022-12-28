@@ -58,9 +58,8 @@ const checkUnitToSequenceUnitRedirect = memoize(
   (courseStatus, courseId, sequenceStatus, sequenceMightBeUnit, sequenceId, section, routeUnitId) => {
     if (courseStatus === 'loaded' && sequenceStatus === 'failed' && !section && !routeUnitId) {
       if (sequenceMightBeUnit) {
-        // If the sequence failed to load as a sequence, but it is marked as a possible unit,
-        // then we need to look up the
-        // correct parent sequence for it, and redirect there.
+        // If the sequence failed to load as a sequence, but it is marked as a possible unit, then
+        // we need to look up the correct parent sequence for it, and redirect there.
         const unitId = sequenceId; // just for clarity during the rest of this method
         getSequenceForUnitDeprecated(courseId, unitId).then(
           parentId => {
@@ -75,7 +74,7 @@ const checkUnitToSequenceUnitRedirect = memoize(
           },
         );
       } else {
-      // Invalid sequence that isn't a unit either. Redirect up to main course.
+        // Invalid sequence that isn't a unit either. Redirect up to main course.
         history.replace(`/course/${courseId}`);
       }
     }
@@ -128,7 +127,6 @@ class CoursewareContainer extends Component {
       sequenceStatus,
       sequence,
     } = this.props;
-    // eslint-disable-next-line react/prop-types
     if (sequenceStatus === 'loaded' && sequence.saveUnitPosition && unitId) {
       const activeUnitIndex = sequence.unitIds.indexOf(unitId);
       this.props.saveSequencePosition(courseId, sequenceId, activeUnitIndex);
@@ -227,9 +225,9 @@ class CoursewareContainer extends Component {
     // Check unit to sequence-unit redirect:
     //    /course/:courseId/:unitId -> /course/:courseId/:sequenceId/:unitId
     // by filling in the ID of the parent sequence of :unitId.
-    // eslint-disable-next-line function-paren-newline
-    checkUnitToSequenceUnitRedirect(
-      courseStatus, courseId, sequenceStatus, sequenceMightBeUnit, sequenceId, sectionViaSequenceId, routeUnitId);
+    checkUnitToSequenceUnitRedirect((
+      courseStatus, courseId, sequenceStatus, sequenceMightBeUnit, sequenceId, sectionViaSequenceId, routeUnitId
+    ));
 
     // Check sequence to sequence-unit redirect:
     //    /course/:courseId/:sequenceId -> /course/:courseId/:sequenceId/:unitId
@@ -322,6 +320,7 @@ const sequenceShape = PropTypes.shape({
   id: PropTypes.string.isRequired,
   unitIds: PropTypes.arrayOf(PropTypes.string),
   sectionId: PropTypes.string.isRequired,
+  saveUnitPosition: PropTypes.any, // eslint-disable-line
 });
 
 const sectionShape = PropTypes.shape({

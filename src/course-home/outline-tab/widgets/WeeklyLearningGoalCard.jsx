@@ -51,7 +51,7 @@ const WeeklyLearningGoalCard = ({
         reminder_selected: selectReminders,
       });
       if (triggeredFromEmail) {
-        sendTrackEvent('welcome.email.clicked.setgoal', {});
+        sendTrackEvent('enrollment.email.clicked.setgoal', {});
       }
     }
   };
