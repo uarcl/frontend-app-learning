@@ -16,8 +16,6 @@ const SequenceContent = ({
   sequenceId,
   unitId,
   unitLoadedHandler,
-  /** [MM-P2P] Experiment */
-  mmp2p,
 }) => {
   const sequence = useModel('sequences', sequenceId);
 
@@ -25,8 +23,6 @@ const SequenceContent = ({
   useEffect(() => {
     global.scrollTo(0, 0);
   }, [sequenceId, unitId]);
-
-  const unit = useModel('units', unitId);
 
   if (gated) {
     return (
@@ -46,6 +42,8 @@ const SequenceContent = ({
       </Suspense>
     );
   }
+
+  const unit = useModel('units', unitId);
   if (!unitId || !unit) {
     return (
       <div>
@@ -61,8 +59,6 @@ const SequenceContent = ({
       key={unitId}
       id={unitId}
       onLoaded={unitLoadedHandler}
-      /** [MM-P2P] Experiment */
-      mmp2p={mmp2p}
     />
   );
 };
@@ -74,28 +70,10 @@ SequenceContent.propTypes = {
   unitId: PropTypes.string,
   unitLoadedHandler: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
-  /** [MM-P2P] Experiment */
-  mmp2p: PropTypes.shape({
-    flyover: PropTypes.shape({
-      isVisible: PropTypes.bool.isRequired,
-    }),
-    meta: PropTypes.shape({
-      showLock: PropTypes.bool,
-    }),
-    state: PropTypes.shape({
-      isEnabled: PropTypes.bool.isRequired,
-    }),
-  }),
 };
 
 SequenceContent.defaultProps = {
   unitId: null,
-  /** [MM-P2P] Experiment */
-  mmp2p: {
-    flyover: { isVisible: false },
-    meta: { showLock: false },
-    state: { isEnabled: false },
-  },
 };
 
 export default injectIntl(SequenceContent);

@@ -16,10 +16,12 @@ const DiscussionsSidebar = ({ intl }) => {
     courseId,
   } = useContext(SidebarContext);
   const topic = useModel('discussionTopics', unitId);
-  if (!topic?.id) {
+  const discussionsUrl = `${getConfig().DISCUSSIONS_MFE_BASE_URL}/${courseId}/category/${unitId}`;
+
+  if (!topic?.id || !topic?.enabledInContext) {
     return null;
   }
-  const discussionsUrl = `${getConfig().DISCUSSIONS_MFE_BASE_URL}/${courseId}/category/${unitId}`;
+
   return (
     <SidebarBase
       title={intl.formatMessage(messages.discussionsTitle)}
@@ -29,7 +31,7 @@ const DiscussionsSidebar = ({ intl }) => {
       showTitleBar={false}
     >
       <iframe
-        src={`${discussionsUrl}?inContext`}
+        src={`${discussionsUrl}?inContextSidebar`}
         className="d-flex w-100 h-100 border-0"
         title={intl.formatMessage(messages.discussionsTitle)}
       />

@@ -8,8 +8,6 @@ import { useSelector } from 'react-redux';
 import { SelectMenu } from '@edx/paragon';
 import { Link } from 'react-router-dom';
 import { useModel, useModels } from '../../generic/model-store';
-/** [MM-P2P] Experiment */
-import { MMP2PFlyoverTrigger } from '../../experiments/mm-p2p';
 import JumpNavMenuItem from './JumpNavMenuItem';
 
 const CourseBreadcrumb = ({
@@ -87,8 +85,6 @@ const CourseBreadcrumbs = ({
   sequenceId,
   unitId,
   isStaff,
-  /** [MM-P2P] Experiment */
-  mmp2p,
 }) => {
   const course = useModel('coursewareMeta', courseId);
   const courseStatus = useSelector(state => state.courseware.courseStatus);
@@ -97,7 +93,6 @@ const CourseBreadcrumbs = ({
   const allSequencesInSections = Object.fromEntries(useModels('sections', course.sectionIds).map(section => [section.id, {
     default: section.id === sectionId,
     title: section.title,
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     sequences: useModels('sequences', section.sequenceIds),
   }]));
 
@@ -125,7 +120,7 @@ const CourseBreadcrumbs = ({
       });
     }
     return [chapters, sequentials];
-  }, [courseStatus, sequenceStatus, allSequencesInSections, sequenceId]);
+  }, [courseStatus, sequenceStatus, allSequencesInSections]);
 
   return (
     <nav aria-label="breadcrumb" className="my-4 d-inline-block col-sm-10">
@@ -153,10 +148,6 @@ const CourseBreadcrumbs = ({
             isStaff={isStaff}
           />
         ))}
-        {/** [MM-P2P] Experiment */}
-        {mmp2p.state && mmp2p.state.isEnabled && (
-          <MMP2PFlyoverTrigger options={mmp2p} />
-        )}
       </ol>
     </nav>
   );
@@ -168,12 +159,6 @@ CourseBreadcrumbs.propTypes = {
   sequenceId: PropTypes.string,
   unitId: PropTypes.string,
   isStaff: PropTypes.bool,
-  /** [MM-P2P] Experiment */
-  mmp2p: PropTypes.shape({
-    state: PropTypes.shape({
-      isEnabled: PropTypes.bool.isRequired,
-    }),
-  }),
 };
 
 CourseBreadcrumbs.defaultProps = {
@@ -181,8 +166,6 @@ CourseBreadcrumbs.defaultProps = {
   sequenceId: null,
   unitId: null,
   isStaff: null,
-  /** [MM-P2P] Experiment */
-  mmp2p: {},
 };
 
 export default CourseBreadcrumbs;

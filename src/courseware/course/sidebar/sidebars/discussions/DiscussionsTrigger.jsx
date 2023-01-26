@@ -33,9 +33,11 @@ const DiscussionsTrigger = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [courseId, baseUrl]);
-  if (!topic.id) {
+
+  if (!topic?.id || !topic?.enabledInContext) {
     return null;
   }
+
   return (
     <SidebarTriggerBase onClick={onClick} ariaLabel={intl.formatMessage(messages.openDiscussionsTrigger)}>
       <Icon src={QuestionAnswer} className="m-0 m-auto" />

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { getConfig } from '@edx/frontend-platform';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { AppContext, ErrorPage } from '@edx/frontend-platform/react';
@@ -9,13 +8,12 @@ import React, {
 } from 'react';
 import { useDispatch } from 'react-redux';
 import { processEvent } from '../../../course-home/data/thunks';
-/** [MM-P2P] Experiment */
-import { MMP2PLockPaywall } from '../../../experiments/mm-p2p';
 import { useEventListener } from '../../../generic/hooks';
 import { useModel } from '../../../generic/model-store';
 import PageLoading from '../../../generic/PageLoading';
 import { fetchCourse } from '../../data';
 import BookmarkButton from '../bookmark/BookmarkButton';
+import ShareButton from '../share/ShareButton';
 import messages from './messages';
 
 const HonorCode = React.lazy(() => import('./honor-code'));
@@ -82,8 +80,6 @@ const Unit = ({
   onLoaded,
   id,
   intl,
-  /** [MM-P2P] Experiment */
-  mmp2p,
 }) => {
   const { authenticatedUser } = useContext(AppContext);
   const view = authenticatedUser ? 'student_view' : 'public_view';
@@ -153,7 +149,11 @@ const Unit = ({
         isBookmarked={unit.bookmarked}
         isProcessing={unit.bookmarkedUpdateState === 'loading'}
       />
-      { !mmp2p.state.isEnabled && contentTypeGatingEnabled && unit.containsContentTypeGatedContent && (
+      {/* TODO: social share exp. Need to remove later */}
+      {(window.expSocialShareAboutUrls && window.expSocialShareAboutUrls[unit.id] !== undefined) && (
+        <ShareButton url={window.expSocialShareAboutUrls[unit.id]} />
+      )}
+      {contentTypeGatingEnabled && unit.containsContentTypeGatedContent && (
         <Suspense
           fallback={(
             <PageLoading
@@ -164,11 +164,7 @@ const Unit = ({
           <LockPaywall courseId={courseId} />
         </Suspense>
       )}
-      { /** [MM-P2P] Experiment */ }
-      { mmp2p.meta.showLock && (
-        <MMP2PLockPaywall options={mmp2p} />
-      )}
-      {!mmp2p.meta.blockContent && shouldDisplayHonorCode && (
+      {shouldDisplayHonorCode && (
         <Suspense
           fallback={(
             <PageLoading
@@ -179,19 +175,17 @@ const Unit = ({
           <HonorCode courseId={courseId} />
         </Suspense>
       )}
-      { /** [MM-P2P] Experiment (conditional) */ }
-      {!mmp2p.meta.blockContent && !shouldDisplayHonorCode && !hasLoaded && !showError && (
+      {!shouldDisplayHonorCode && !hasLoaded && !showError && (
         <PageLoading
           srMessage={intl.formatMessage(messages.loadingSequence)}
         />
       )}
-      {!mmp2p.meta.blockContent && !shouldDisplayHonorCode && !hasLoaded && showError && (
+      {!shouldDisplayHonorCode && !hasLoaded && showError && (
         <ErrorPage />
       )}
       {modalOptions.open && (
         <Modal
           body={(
-            // eslint-disable-next-line react/jsx-no-useless-fragment
             <>
               {modalOptions.body
                 ? <div className="unit-modal">{ modalOptions.body }</div>
@@ -214,8 +208,7 @@ const Unit = ({
           dialogClassName="modal-lti"
         />
       )}
-      { /** [MM-P2P] Experiment (conditional) */ }
-      { !mmp2p.meta.blockContent && !shouldDisplayHonorCode && (
+      {!shouldDisplayHonorCode && (
         <div className="unit-iframe-wrapper">
           <iframe
             id="unit-iframe"
@@ -254,31 +247,11 @@ Unit.propTypes = {
   id: PropTypes.string.isRequired,
   intl: intlShape.isRequired,
   onLoaded: PropTypes.func,
-  /** [MM-P2P] Experiment */
-  mmp2p: PropTypes.shape({
-    state: PropTypes.shape({
-      isEnabled: PropTypes.bool.isRequired,
-    }),
-    meta: PropTypes.shape({
-      showLock: PropTypes.bool,
-      blockContent: PropTypes.bool,
-    }),
-  }),
 };
 
 Unit.defaultProps = {
   format: null,
   onLoaded: undefined,
-  /** [MM-P2P] Experiment */
-  mmp2p: {
-    state: {
-      isEnabled: false,
-    },
-    meta: {
-      showLock: false,
-      blockContent: false,
-    },
-  },
 };
 
 export default injectIntl(Unit);
