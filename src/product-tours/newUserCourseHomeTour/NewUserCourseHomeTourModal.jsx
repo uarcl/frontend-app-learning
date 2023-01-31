@@ -25,7 +25,7 @@ function NewUserCourseHomeTourModal({
       heroNode={(
         <ModalDialog.Hero>
           <ModalDialog.Hero.Background
-            backgroundSrc={heroImage}
+            className="bg-primary"
           />
           <ModalDialog.Hero.Content style={{ maxWidth: '20rem' }}>
             <ModalDialog.Title as="h2">
