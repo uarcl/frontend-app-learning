@@ -6,7 +6,7 @@ import { Redirect } from 'react-router';
 
 import Footer from '@uarcl/frontend-component-footer-uardigital';
 import { Toast } from '@edx/paragon';
-import { LearningHeader as Header } from '@uarcl/frontend-component-header-uardigital';
+import { LearningHeader as Header } from '@edx/frontend-component-header';
 import PageLoading from '../generic/PageLoading';
 import { getAccessDeniedRedirectUrl } from '../shared/access';
 import { useModel } from '../generic/model-store';
