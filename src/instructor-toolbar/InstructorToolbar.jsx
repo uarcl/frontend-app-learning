@@ -66,8 +66,8 @@ export default function InstructorToolbar(props) {
 
   return (!didMount ? null : (
     <div data-testid="instructor-toolbar">
-      <div className="bg-primary text-white">
-        <div className="container-xl py-3 d-md-flex justify-content-end align-items-start">
+      <div className="bg-white text-white">
+        <div className="container-xl py-3 d-md-flex justify-content-end align-items-start bg-primary">
           <div className="align-items-center flex-grow-1 d-md-flex mx-1 my-1">
             <MasqueradeWidget courseId={courseId} onError={showMasqueradeError} />
           </div>
