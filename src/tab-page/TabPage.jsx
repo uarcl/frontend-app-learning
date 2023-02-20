@@ -17,7 +17,7 @@ import LoadedTabPage from './LoadedTabPage';
 import { setCallToActionToast } from '../course-home/data/slice';
 import LaunchCourseHomeTourButton from '../product-tours/newUserCourseHomeTour/LaunchCourseHomeTourButton';
 import { getLoginRedirectUrl } from '@edx/frontend-platform/auth';
-
+import { AppContext } from '@edx/frontend-platform/react';
 function TabPage({ intl, ...props }) {
   const {
     activeTabSlug,
