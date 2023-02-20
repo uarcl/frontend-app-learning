@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext }  from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +16,7 @@ import messages from './messages';
 import LoadedTabPage from './LoadedTabPage';
 import { setCallToActionToast } from '../course-home/data/slice';
 import LaunchCourseHomeTourButton from '../product-tours/newUserCourseHomeTour/LaunchCourseHomeTourButton';
+import { getLoginRedirectUrl } from '@edx/frontend-platform/auth';
 
 function TabPage({ intl, ...props }) {
   const {
@@ -37,6 +38,17 @@ function TabPage({ intl, ...props }) {
     start,
     title,
   } = useModel('courseHomeMeta', courseId);
+
+  const { authenticatedUser } = useContext(AppContext);
+  const outline = useModel('outline', courseId);
+  const privateOutline = outline && outline.courseBlocks && !outline.courseBlocks.courses;
+  const needUserLogin = authenticatedUser === null && privateOutline;
+  if (needUserLogin){
+    const redirectLogin = getLoginRedirectUrl(global.location.href);
+    if(redirectLogin){
+      return (<Redirect to={redirectLogin} />);
+    }
+  }
 
   if (courseStatus === 'loading') {
     return (
