@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
@@ -31,27 +31,11 @@ import AccountActivationAlert from '../../alerts/logistration-alert/AccountActiv
 
 /** [MM-P2P] Experiment */
 import { initHomeMMP2P, MMP2PFlyover } from '../../experiments/mm-p2p';
-
-import { getLoginRedirectUrl } from '@edx/frontend-platform/auth';
-import { AppContext } from '@edx/frontend-platform/react';
-
 function OutlineTab({ intl }) {
   const {
     courseId,
     proctoringPanelStatus,
   } = useSelector(state => state.courseHome);
-
-  const { authenticatedUser } = useContext(AppContext);
-  const outline = useModel('outline', courseId);
-  const privateOutline = outline && outline.courseBlocks && !outline.courseBlocks.courses;
-  const needUserLogin = authenticatedUser === null && privateOutline;
-  if (needUserLogin){
-    const redirectLogin = getLoginRedirectUrl(global.location.href);
-    if(redirectLogin){
-      window.location.replace(redirectLogin);
-      return null;
-    }
-  }
 
   const {
     isSelfPaced,

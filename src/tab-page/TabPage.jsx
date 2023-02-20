@@ -40,21 +40,12 @@ function TabPage({ intl, ...props }) {
   } = useModel('courseHomeMeta', courseId);
 
   const { authenticatedUser } = useContext(AppContext);
-  const outline = useModel('outline', courseId);
-  const privateOutline = outline && outline.courseBlocks && !outline.courseBlocks.courses;
-  const needUserLogin = authenticatedUser === null && privateOutline;
-  if (needUserLogin){
-    const redirectLogin = getLoginRedirectUrl(global.location.href);
-    if(redirectLogin){
-      window.location.replace(redirectLogin);
-      return null;
-    }
-  }
-
   if (courseStatus === 'loading') {
     return (
       <>
-        <Header />
+        <Header 
+          showUserDropdow={authenticatedUser?true:false}
+        />
         <PageLoading
           srMessage={intl.formatMessage(messages.loading)}
         />
@@ -64,6 +55,13 @@ function TabPage({ intl, ...props }) {
   }
 
   if (courseStatus === 'denied') {
+    if (courseAccess.errorCode === 'authentication_required'){
+      const redirectLogin = getLoginRedirectUrl(global.location.href);
+      if(redirectLogin){
+        window.location.replace(redirectLogin);
+        return null;
+      }
+    }
     const redirectUrl = getAccessDeniedRedirectUrl(courseId, activeTabSlug, courseAccess, start);
     if (redirectUrl) {
       return (<Redirect to={redirectUrl} />);
