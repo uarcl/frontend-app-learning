@@ -44,7 +44,7 @@ function TabPage({ intl, ...props }) {
     return (
       <>
         <Header 
-          showUserDropdow={authenticatedUser?true:false}
+          showUserDropdown={authenticatedUser?true:false}
         />
         <PageLoading
           srMessage={intl.formatMessage(messages.loading)}
