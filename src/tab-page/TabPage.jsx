@@ -47,7 +47,7 @@ function TabPage({ intl, ...props }) {
     const redirectLogin = getLoginRedirectUrl(global.location.href);
     if(redirectLogin){
       window.location.replace(redirectLogin);
-      return (<></>);
+      return null;
     }
   }
 
