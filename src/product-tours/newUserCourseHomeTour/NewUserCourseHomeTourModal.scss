@@ -1,3 +1,10 @@
 [dir="rtl"] .new-user-tour-dialog .pgn__modal-hero .pgn__modal-hero-bg {
     transform: scaleX(-1);
 }
+.pgn__modal-hero{
+    border-bottom: 1px solid #5708ab;
+    background-color: unset !important;
+}
+.hero-logo{
+    max-height: 50px !important;
+}

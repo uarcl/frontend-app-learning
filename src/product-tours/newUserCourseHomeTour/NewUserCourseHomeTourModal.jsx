@@ -6,8 +6,8 @@ import {
   ActionRow, Button, MarketingModal, ModalDialog,
 } from '@edx/paragon';
 
-import heroImage from './course_home_tour_modal_hero.png';
 import messages from '../messages';
+import Logo from '../../assets/logo_uar.png';
 
 function NewUserCourseHomeTourModal({
   intl,
@@ -23,18 +23,15 @@ function NewUserCourseHomeTourModal({
       heroIsDark
       hasCloseButton={false}
       heroNode={(
-        <ModalDialog.Hero>
-          <ModalDialog.Hero.Background
-            backgroundSrc={heroImage}
-          />
+        <ModalDialog.Hero className="flex-column flex-md-row">
+          <img src={Logo} clasName="mr-0 mr-md-3 hero-logo" />
           <ModalDialog.Hero.Content style={{ maxWidth: '20rem' }}>
-            <ModalDialog.Title as="h2">
+            <ModalDialog.Title as="h2" clasName="text-primary">
               <FormattedMessage
                 id="tours.newUserModal.title"
-                defaultMessage="{welcome} {siteName} course!"
+                defaultMessage="{welcome} course!"
                 values={{
-                  siteName: getConfig().SITE_NAME,
-                  welcome: <span className="text-accent-b">{intl.formatMessage(messages.newUserModalTitleWelcome)}</span>,
+                  welcome: <span className="text-primary">{intl.formatMessage(messages.newUserModalTitleWelcome)}</span>,
                 }}
               />
             </ModalDialog.Title>
