@@ -24,9 +24,9 @@ function NewUserCourseHomeTourModal({
       hasCloseButton={false}
       heroNode={(
         <ModalDialog.Hero className="flex-column flex-md-row">
-          <img src={Logo} clasName="mr-0 mr-md-3 hero-logo" />
+          <img src={Logo} className="mr-0 mr-md-3 hero-logo" />
           <ModalDialog.Hero.Content style={{ maxWidth: '20rem' }}>
-            <ModalDialog.Title as="h2" clasName="text-primary">
+            <ModalDialog.Title as="h2" className="text-primary">
               <FormattedMessage
                 id="tours.newUserModal.title"
                 defaultMessage="{welcome} course!"
@@ -56,7 +56,7 @@ function NewUserCourseHomeTourModal({
       )}
       onClose={onDismiss}
     >
-      <p className="text-dark-900">{intl.formatMessage(messages.newUserModalBody, { siteName: getConfig().SITE_NAME })}</p>
+      <p className="text-dark-900">{intl.formatMessage(messages.newUserModalBody)}</p>
     </MarketingModal>
   );
 }
