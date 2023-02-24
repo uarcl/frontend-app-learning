@@ -149,7 +149,7 @@ function Sequence({
   };
 
   const defaultContent = (
-    <div className="sequence-container d-inline-flex flex-row">
+    <div className="sequence-container d-inline-flex flex-row w-100">
       <div className={classNames('sequence w-100', { 'position-relative': shouldDisplayNotificationTriggerInSequence })}>
         <SequenceNavigation
           sequenceId={sequenceId}
