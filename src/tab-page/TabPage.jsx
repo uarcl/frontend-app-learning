@@ -102,6 +102,15 @@ function TabPage({ intl, ...props }) {
     window.location.replace(redirectLogin);
     return null;
   }
+  return (
+    <>
+      <Header />
+      <p className="text-center py-5 mx-auto" style={{ maxWidth: '30em' }}>
+        {intl.formatMessage(messages.failure)}
+      </p>
+      <Footer />
+    </>
+  );
 }
 
 TabPage.defaultProps = {
