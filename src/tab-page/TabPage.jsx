@@ -97,15 +97,11 @@ function TabPage({ intl, ...props }) {
   }
 
   // courseStatus 'failed' and any other unexpected course status.
-  return (
-    <>
-      <Header />
-      <p className="text-center py-5 mx-auto" style={{ maxWidth: '30em' }}>
-        {intl.formatMessage(messages.failure)}
-      </p>
-      <Footer />
-    </>
-  );
+  const redirectLogin = getLoginRedirectUrl(global.location.href);
+  if(redirectLogin){
+    window.location.replace(redirectLogin);
+    return null;
+  }
 }
 
 TabPage.defaultProps = {
